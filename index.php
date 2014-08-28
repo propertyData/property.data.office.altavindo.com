@@ -34,7 +34,7 @@
 <script type="text/javascript" src="web/map-marker.js"></script>
 <script type="text/javascript" src="web/kml-map.js"></script>
 	<script type="text/javascript">
-	var peta;
+var peta;
 var peta2;
 var nama     = new Array();
 var kategori = new Array();
@@ -61,7 +61,6 @@ gambar_tanda = 'assets/img/marker.png';
     ];
 
     var petaoption = {
-        zoom: 10,
         center: purwakarta,
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         styles: myStyles 
@@ -70,7 +69,7 @@ gambar_tanda = 'assets/img/marker.png';
     peta = new google.maps.Map(document.getElementById("petaku"),petaoption);
 
 		/** disini kita panggil function dari geoXML3 untuk memparsing file kml */
-		var geoXml = new geoXML3.parser({map: peta});
+		var geoXml = new geoXML3.parser({map:peta,zoom:true,singleInfoWindow:true});
 		/** letak file kml */
 		geoXml.parse('web/jawa_barat.kml');
 
@@ -85,12 +84,19 @@ gambar_tanda = 'assets/img/marker.png';
 	//ambilpeta();
 }
 	function zoomPeta() {
-			/** disini kita panggil function dari geoXML3 untuk memparsing file kml */
-		var geoXml = new geoXML3.parser({map: peta});
-		/** letak file kml */
-		geoXml.parse('web/jawa_barat.kml');
-    var purwakarta = new google.maps.LatLng(-6.538174427323609,107.44945527392576);
-
+	var obj = document.getElementById("kab");
+	var select = obj.options[obj.selectedIndex].text;
+	var purwakarta = new google.maps.LatLng(-6.538174427323609,107.44945527392576);
+	//<?php
+	//	$link   = mysql_connect('localhost','root','');
+    //	mysql_select_db('googlemaps_multiicon', $link);
+    //	if($_GET['select']!="- Pilih Kabupaten -"){
+	//	$sql = mysql_query("SELECT * FROM `kabkota` where "+$_GET['select']);
+	//	while ($kab = mysql_fetch_array($sql)) {
+	//	$purwakarta = new google.maps.LatLng($kab['lat'],$kab['long']);
+	//	}
+	//	}
+	//?>
 	  // ini buat ngilangin icon place bawaan google maps
     var myStyles =[
     {
@@ -111,6 +117,10 @@ gambar_tanda = 'assets/img/marker.png';
 
     peta = new google.maps.Map(document.getElementById("petaku"),petaoption);
 
+		/** disini kita panggil function dari geoXML3 untuk memparsing file kml */
+		var geoXml = new geoXML3.parser({map:peta,zoom:false,singleInfoWindow:true});
+		/** letak file kml */
+		geoXml.parse('web/jawa_barat.kml');
 
 		//event on click		
 		google.maps.event.addListener(peta,'click',function(event){
